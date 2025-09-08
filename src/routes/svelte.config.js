@@ -1,4 +1,5 @@
 import adapter from '@sveltejs/adapter-static';
+import { readFileSync } from 'fs';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -10,9 +11,11 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		paths: {
-			base: process.env.NODE_ENV === 'production' ? '/is-de-on5-vrij' : ''
+			base:
+				process.env.NODE_ENV === 'production'
+					? JSON.parse(readFileSync('./package.json', 'utf8')).homepage
+					: ''
 		}
 	}
 };
-
 export default config;
